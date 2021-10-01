@@ -1,38 +1,38 @@
 {
     "name": "@theobassan/eslint-plugin",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "description": "Custom eslint rules",
     "license": "WTFPL",
     "keywords": [
-      "Eslint"
+        "Eslint"
     ],
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/theobassan/eslint-plugin.git"
+        "type": "git",
+        "url": "git+https://github.com/theobassan/eslint-plugin.git"
     },
     "bugs": {
-      "url": "https://github.com/theobassan/eslint-plugin/issues"
+        "url": "https://github.com/theobassan/eslint-plugin/issues"
     },
     "homepage": "https://github.com/theobassan/eslint-plugin#readme",
     "scripts": {
-      "release": "np",
-      "prepare": "husky install",
-      "prepublishOnly": "npm run build && npm pack",
-      "postpublish": "npm run delete:build && npm run delete:pack",
-      "build": "tsc --declaration",
-      "delete:build": "rm -rf lib",
-      "delete:pack": "rm -rf theobassan-eslint-plugin-*",
-      "test:all": "npm test && npm run lint",
-      "test": "echo \"Error: no test specified\"",
-      "lint": "eslint '*/**/*.ts'",
-      "lint:fix": "eslint '*/**/*.ts' --fix",
-      "lint:staged": "lint-staged",
-      "lint:staged:fix": "eslint --fix"
+        "release": "np",
+        "prepare": "husky install",
+        "prepublishOnly": "npm run build && npm pack",
+        "postpublish": "npm run delete:build && npm run delete:pack",
+        "build": "tsc --declaration",
+        "delete:build": "rm -rf lib",
+        "delete:pack": "rm -rf theobassan-eslint-plugin-*",
+        "test:all": "npm test && npm run lint",
+        "test": "echo \"Error: no test specified\"",
+        "lint": "eslint '*/**/*.ts'",
+        "lint:fix": "eslint '*/**/*.ts' --fix",
+        "lint:staged": "lint-staged",
+        "lint:staged:fix": "eslint --fix"
     },
     "lint-staged": {
-      "*.ts": [
-        "npm run lint:staged:fix"
-      ]
+        "*.ts": [
+            "npm run lint:staged:fix"
+        ]
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^4.32.0",
@@ -49,28 +49,28 @@
         "typescript": "^4.4.3"
     },
     "dependencies": {
-      "@tsconfig/node16": "^1.0.2"
+        "@tsconfig/node16": "^1.0.2"
     },
     "main": "./lib/index.js",
     "types": "./lib/index.d.ts",
     "files": [
-      "lib"
+        "lib"
     ],
     "publishConfig": {
-      "registry": "https://registry.npmjs.org",
-      "access": "public"
+        "registry": "https://registry.npmjs.org",
+        "access": "public"
     },
     "np": {
-      "branch": "main",
-      "cleanup": false,
-      "tests": true,
-      "publish": true,
-      "preview": false,
-      "tag": "latest",
-      "yarn": false,
-      "contents": ".",
-      "releaseDraft": true,
-      "testScript": "test:all",
-      "2fa": false
+        "branch": "main",
+        "cleanup": false,
+        "tests": true,
+        "publish": true,
+        "preview": false,
+        "tag": "latest",
+        "yarn": false,
+        "contents": ".",
+        "releaseDraft": true,
+        "testScript": "test:all",
+        "2fa": false
     }
 }
