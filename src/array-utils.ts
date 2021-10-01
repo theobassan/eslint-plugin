@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
-
 const astUtils = require('eslint/lib/rules/utils/ast-utils');
 
 import { isTargetMethod } from './method-utils';
+import { Node } from './types';
 
-const getCallExpressionMethodName = (currentNode: any) => {
+const getCallExpressionMethodName = (currentNode: Node) => {
     const parent = currentNode.parent;
     if (astUtils.isArrayFromMethod(parent.callee)) {
         if (parent.arguments.length >= 2 && parent.arguments[1] === currentNode) {
@@ -21,7 +19,7 @@ const getCallExpressionMethodName = (currentNode: any) => {
     return undefined;
 };
 
-const getArrayMethodName = (node: any): string | undefined => {
+const getArrayMethodName = (node: Node): string | undefined => {
     let currentNode = node;
 
     while (currentNode) {
@@ -42,7 +40,7 @@ const getArrayMethodName = (node: any): string | undefined => {
                 break;
             }
             case 'CallExpression':
-                return getCallExpressionMethodName(currentNode);
+                return getCallExpressionMethodName(currentNode as Node);
             default:
                 return undefined;
         }

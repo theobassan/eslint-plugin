@@ -12,6 +12,7 @@ module.exports = {
     rules: {
         'no-null/no-null': 2,
         '@typescript-eslint/no-unused-vars': 2,
+        '@typescript-eslint/no-explicit-any': 2,
         'max-params': ['error', { max: 1 }],
         'max-depth': ['error', { max: 3 }],
         'max-lines': ['error', { max: 60 }],

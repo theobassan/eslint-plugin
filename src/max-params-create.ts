@@ -1,16 +1,16 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
-
 const astUtils = require('eslint/lib/rules/utils/ast-utils');
 const { upperCaseFirst } = require('eslint/lib/shared/string-utils');
 
+import { Rule } from 'eslint';
 import { getArrayMethodName } from './array-utils';
+import { getNumParams, getAllowArraysCallbacks } from './options-utils';
+import { Node } from './types';
 
-const checkFunction = (options: { node: any; context: any }) => {
-    const option = options.context.options[0];
-    const numParams = getNumParams(option);
-    const allowArraysCallbacks = getAllowArraysCallbacks(option);
+const checkFunction = (options: { context: Rule.RuleContext; node: Node }): void => {
+    const contextOptions = options.context.options[0];
+    const numParams = getNumParams(contextOptions);
+    const allowArraysCallbacks = getAllowArraysCallbacks(contextOptions);
 
     if (
         options.node.params.length > numParams &&
@@ -22,36 +22,18 @@ const checkFunction = (options: { node: any; context: any }) => {
             messageId: 'exceed',
             data: {
                 name: upperCaseFirst(astUtils.getFunctionNameWithKind(options.node)),
-                count: options.node.params.length,
-                max: numParams,
+                count: options.node.params.length.toString(),
+                max: numParams.toString(),
             },
         });
     }
 };
 
-const getNumParams = (option: number | { max: number }): number => {
-    if (typeof option === 'object' && Object.prototype.hasOwnProperty.call(option, 'max')) {
-        return option.max;
-    } else if (typeof option === 'number') {
-        return option;
-    }
-
-    return 3;
-};
-
-const getAllowArraysCallbacks = (option: number | { allowArraysCallbacks: boolean }): boolean => {
-    if (typeof option === 'object' && Object.prototype.hasOwnProperty.call(option, 'allowArraysCallbacks')) {
-        return option.allowArraysCallbacks;
-    }
-
-    return false;
-};
-
-const create = (context: any): any => {
+const create = (context: Rule.RuleContext): Rule.RuleListener => {
     return {
-        FunctionDeclaration: (node: any) => checkFunction({ context, node }),
-        ArrowFunctionExpression: (node: any) => checkFunction({ context, node }),
-        FunctionExpression: (node: any) => checkFunction({ context, node }),
+        FunctionDeclaration: (node: Rule.Node) => checkFunction({ context, node: node as Node }),
+        ArrowFunctionExpression: (node: Rule.Node) => checkFunction({ context, node: node as Node }),
+        FunctionExpression: (node: Rule.Node) => checkFunction({ context, node: node as Node }),
     };
 };
 

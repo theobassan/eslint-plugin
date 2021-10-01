@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-var-requires */
+import { Rule } from 'eslint';
 
 import { create } from './max-params-create';
 
@@ -40,7 +39,7 @@ module.exports = {
         },
     },
 
-    create(context: any) {
+    create(context: Rule.RuleContext) {
         return create(context);
     },
 };
