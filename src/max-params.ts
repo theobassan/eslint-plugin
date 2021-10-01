@@ -80,13 +80,12 @@ module.exports = {
                     {
                         type: 'object',
                         properties: {
-                            maximum: {
-                                type: 'integer',
-                                minimum: 0,
-                            },
                             max: {
                                 type: 'integer',
                                 minimum: 0,
+                            },
+                            allowArraysCallbacks: {
+                                type: 'boolean',
                             },
                         },
                         additionalProperties: false,
@@ -103,20 +102,28 @@ module.exports = {
         const sourceCode = context.getSourceCode();
         const option = context.options[0];
         let numParams = 3;
+        let allowArraysCallbacks = false;
 
-        if (
-            typeof option === 'object' &&
-            (Object.prototype.hasOwnProperty.call(option, 'maximum') ||
-                Object.prototype.hasOwnProperty.call(option, 'max'))
-        ) {
-            numParams = option.maximum || option.max;
+        if (typeof option === 'object') {
+            if (
+                Object.prototype.hasOwnProperty.call(option, 'maximum') ||
+                Object.prototype.hasOwnProperty.call(option, 'max')
+            ) {
+                numParams = option.maximum || option.max;
+            }
+            if (Object.prototype.hasOwnProperty.call(option, 'allowArraysCallbacks')) {
+                allowArraysCallbacks = option.allowArraysCallbacks;
+            }
         }
         if (typeof option === 'number') {
             numParams = option;
         }
 
         function checkFunction(node: any) {
-            if (node.params.length > numParams && getArrayMethodName(node) == undefined) {
+            if (
+                node.params.length > numParams &&
+                (allowArraysCallbacks == false || getArrayMethodName(node) == undefined)
+            ) {
                 context.report({
                     loc: astUtils.getFunctionHeadLoc(node, sourceCode),
                     node,
