@@ -26,12 +26,11 @@
         "test": "echo \"Error: no test specified\"",
         "lint": "eslint '*/**/*.ts'",
         "lint:fix": "eslint '*/**/*.ts' --fix",
-        "lint:staged": "lint-staged",
-        "lint:staged:fix": "eslint --fix"
+        "lint:staged": "lint-staged"
     },
     "lint-staged": {
         "*.ts": [
-            "npm run lint:staged:fix"
+            "eslint --fix"
         ]
     },
     "devDependencies": {
